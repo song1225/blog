@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,viewport-fit=cover" />
+<title>博客发布</title>
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/semantic.min.css"
+	th:href="@{/css/semantic.min.css}" />
+<link rel="stylesheet" type="text/css" href="../../static/css/me.css"
+	th:href="@{/css/me.css}" />
+<link rel="stylesheet" type="text/css"
+	href="../../static/plug/editor.md-master/css/editormd.min.css"
+	th:href="@{/plug/editor.md-master/css/editormd.min.css}" />
+</head>
+<body>
+	<!-- 顶部导航栏 -->
+	<nav
+		class="ui teal inverted attached segment m-padded-tb-mini m-shadow-small"
+		style="border:none;">
+		<div class="ui container">
+			<div class="ui teal inverted secondary stackable menu">
+				<h2 class="ui orange header item">猿圈</h2>
+				<div class="right m-item item m-mobile-hide">
+					<a href="index.html" class="m-item item m-mobile-hide"
+						th:href="@{/user}"><i class="home icon"></i>首页</a>
+					<div id="goLogout2" class="ui dropdown item"
+						th:if="${session.user.type}==1">
+						<img alt="" src="../../static/images/1.jpg"
+							class="ui avatar image" th:src="${session.user.avatar}" />
+						<div class="text" th:text="${session.user.nickname}">会员中心</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+						<a href="#" class="item" th:href="@{/user/userInfo}"><i
+								class="user icon"></i>个人中心</a>
+							<a href="#" th:href="@{/user/toLoginPage}" class="item"><i
+								class="sign in icon"></i>注 销</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a id="showHideBtn" href="#"
+			class="ui teal button icon m-top-right m-mobile-show"> <i
+			class="sidebar icon"></i>
+		</a>
+	</nav>
+
+	<div class="ui attached pointing menu">
+		<div class="ui container">
+			<div class="right menu">
+				<a href="#" class="active item">发布</a>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 中间内容部分 -->
+	<div class="m-padded-tb-large">
+		<div class="ui container">
+			<form id="blog_form" action="#" method="post"
+				th:action="@{/user/addBlog}" class="ui form">
+				<input type="hidden" name="published" />
+				<div class="required field">
+					<div class="ui left labeled input">
+						<div class="ui selection compact dropdown teal label">
+							<input type="hidden" value="原创" name="flag" /> <i
+								class="dropdown icon"></i>
+							<div class="text">原创</div>
+							<div class="menu">
+								<div class="item" data-value="原创">原创</div>
+								<div class="item" data-value="转载">转载</div>
+								<div class="item" data-value="翻译">翻译</div>
+							</div>
+						</div>
+						<input type="text" name="title" placeholder="标题" />
+					</div>
+				</div>
+
+				<div class="field m-margin-top">
+					<div id="md-content">
+						<textarea placeholder="博客内容" style="display: none;" name="content">	
+						</textarea>
+					</div>
+
+				</div>
+
+				<div class="two fields m-margin-top">
+					<div class="field">
+						<div class="ui left labeled action input">
+							<div class="ui compact teal label">分类</div>
+							<div class="ui fluid selection dropdown">
+								<input type="hidden" name="typeId" id="typeId" /> <i
+									class="dropdown icon"></i>
+								<div class="default text">分类</div>
+								<div class="menu">
+									<div th:each="type : ${types}" class="item" data-value="1"
+										th:attr="data-value=${type.id}" th:text="${type.name}">JAVA1</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<div class="ui left labeled action input">
+							<div class="ui compact teal label">标签</div>
+							<div class="ui selection multiple search fluid dropdown">
+								<input type="hidden" name="tagIds" /> <i class="dropdown icon"></i>
+								<div class="default text">标签</div>
+								<div class="menu">
+									<div class="item" th:each="tag:${tags}"
+										th:attr="data-value=${tag.id}" data-value="1"
+										th:text="${tag.name}"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="field m-margin-top">
+					<div class="ui left labeled input">
+						<div class="ui teal label">首图</div>
+						<input type="text" placeholder="首图地址" name="firstPicture" />
+					</div>
+				</div>
+				<div>
+					<textarea placeholder="请输入描述" name="description"></textarea>
+				</div>
+				<div class="inline fields m-margin-top">
+					<div class="field">
+						<div class="ui checkbox">
+							<input name="recommend" id="recommend" type="checkbox" /> <label
+								for="recommend">推荐</label>
+						</div>
+					</div>
+					<div class="field">
+						<div class="ui checkbox">
+							<input name="shareStatement" id="shareStatement" type="checkbox" />
+							<label for="shareStatement">转载声明</label>
+						</div>
+					</div>
+					<div class="field">
+						<div class="ui checkbox">
+							<input name="appreciation" id="appreciation" type="checkbox" />
+							<label for="appreciation">赞赏</label>
+						</div>
+					</div>
+					<div class="field">
+						<div class="ui checkbox">
+							<input name="commentabled" id="commentabled" type="checkbox" />
+							<label for="commentabled">评论</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="ui error message"></div>
+
+				<div class="ui right aligned container m-margin-top">
+					<!-- <button type="button" class="ui button"
+						onclick="window.history.go(-1)">返回</button> -->
+					<button type="button" class="ui orange button" id="saveBtn">保存</button>
+					<button type="button" class="ui teal button" id="publishBtn">发布</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+
+	<!-- 底部footer -->
+	<footer class="ui teal inverted attached segment m-padded-tb-massive"
+		style="border:none;">
+		<div class="ui center aligned container">
+			<div class="ui internally celled stackable grid">
+				<div class="row">
+					<div class="three wide column">
+						<div class="ui inverted link list">
+							<div class="item">
+								<img src="../../static/images/wechat.png"
+									th:src="@{/images/wechat.png}" class="ui rounded image"
+									style="width:100px" />
+							</div>
+						</div>
+					</div>
+					<div class="three wide column">
+						<h4 class="ui inverted header">最新博客</h4>
+						<div class="ui inverted link list">
+							<a href="#" class="item">用户故事（User Story）</a> <a href="#"
+								class="item">香港暴徒的出路在哪里？</a> <a href="#" class="item">华为最新折叠手机</a>
+						</div>
+					</div>
+					<div class="three wide column">
+						<h4 class="ui inverted header">联系我们</h4>
+						<div class="ui inverted link list">
+							<a href="#" class="item">Email:18810102841@163.com</a> <a
+								href="#" class="item">电话:010-8207107</a> <a href="#"
+								class="item">QQ:903442712</a>
+						</div>
+					</div>
+					<div class="seven wide column">
+						<h4 class="ui inverted header">LiuSong</h4>
+						<p class="m-text-opacity-mini">这是我的个人博客，会分享关于编程、写作、思考相关的任何内容，希望可以给
+							所有来到这里的人帮助...</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui inverted  divider"></div>
+			<p class="m-text-spaced m-text-opacity-mini">Copyright
+				©2019-2020LiuSong Designed By LiuSong</p>
+		</div>
+	</footer>
+	<script type="text/javascript" src="../../static/js/jquery.min.js"
+		th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" src="../../static/js/semantic.min.js"
+		th:src="@{/js/semantic.min.js}"></script>
+	<script type="text/javascript"
+		src="../../static/plug/editor.md-master/editormd.min.js"
+		th:src="@{/plug/editor.md-master/editormd.min.js}"></script>
+	<script type="text/javascript">
+		var contentEditor;
+		$(function() {
+			contentEditor = editormd("md-content", {
+				width : "100%",
+				height : 640,
+				syncScrolling : "single",
+				path : '/plug/editor.md-master/lib/',
+				/**上传图片相关配置如下*/
+				imageUpload : true,
+				imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ]
+			});
+		});
+	
+		$('#showHideBtn').click(function() {
+			$('.m-item').toggleClass('m-mobile-hide');
+		});
+	
+	
+		$('#goLogout')
+			.dropdown({
+				on : 'hover'
+			});
+	
+		$('.ui.dropdown')
+			.dropdown({
+				on : 'hover'
+			});
+	
+		$('.ui.form').form({
+			title : {
+				identifier : 'title',
+				rules : [
+					{
+						type : 'empty',
+						prompt : '请输入标题'
+					}
+				]
+			},
+			type : {
+				identifier : 'type',
+				rules : [
+					{
+						type : 'empty',
+						prompt : '请选择分类'
+					}
+				]
+			},
+			tag : {
+				identifier : 'tag',
+				rules : [
+					{
+						type : 'empty',
+						prompt : '请选择标签'
+					}
+				]
+			},
+			firstPicture : {
+				identifier : 'firstPicture',
+				rules : [
+					{
+						type : 'empty',
+						prompt : '请添加首图地址'
+					}
+				]
+			}
+		});
+	
+		$("#saveBtn").click(function() {
+			$("[name='published']").val(false);
+			$("#blog_form").submit();
+		});
+	
+		$("#publishBtn").click(function() {
+			var published = $("[name='published']").val(true);
+			$("#blog_form").submit();
+		});
+	</script>
+</body>
+</html>

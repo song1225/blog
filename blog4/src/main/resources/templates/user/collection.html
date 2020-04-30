@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,viewport-fit=cover" />
+<title>收藏列表</title>
+<link href="../static/css/semantic.min.css" rel="stylesheet"
+	th:href="@{/css/semantic.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/me.css"
+	th:href="@{/css/me.css}" />
+</head>
+<body>
+	<!-- 顶部导航栏 -->
+	<nav
+		class="ui teal inverted attached segment m-padded-tb-mini m-shadow-small"
+		style="border:none;">
+		<div class="ui container">
+			<div class="ui teal inverted secondary stackable menu">
+				<h2 class="ui orange header item">猿圈</h2>
+				<div class="right m-item item m-mobile-hide">
+					<a href="index.html" class="m-item item m-mobile-hide"
+						th:href="@{/user}"><i class="home icon"></i>首页</a>
+					<div id="goLogout2" class="ui dropdown item"
+						th:if="${session.user.type}==1">
+						<img alt="" src="../../static/images/1.jpg"
+							class="ui avatar image" th:src="${session.user.avatar}" />
+						<div class="text" th:text="${session.user.nickname}">会员中心</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<a href="#" th:href="@{/user/toLoginPage}" class="item"><i
+								class="sign in icon"></i>注 销</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a id="showHideBtn" href="#"
+			class="ui teal button icon m-top-right m-mobile-show"> <i
+			class="sidebar icon"></i>
+		</a>
+	</nav>
+
+
+
+	<!-- 中间内容部分 -->
+
+	<div class="ui container">
+
+		<br /> <br />
+		<div class="ui stackable grid">
+			<div class="four wide column">
+				<div class="ui large pointing vertical menu">
+					<div class="header item">会员中心</div>
+					<a class="item" th:href="@{/user/userInfo}"><i class="user icon"></i>个人资料</a> 
+					<a class="item" th:href="@{/user/updatePassword}"><i class="privacy icon"></i>修改密码</a>
+					<a class="item" th:href="@{/user/toLoginPage}"><i class="sign out icon"></i>注销</a>
+					<div class="header item">内容管理</div>
+					<a class="item" th:href="@{/user/getMyBlogs}"><i class="list layout icon"></i>我发布的文章</a>
+					<a class="item" th:href="@{/user/toAddBlogPage}"><i class="write icon"></i>发布文章</a>
+					<a class="item" th:href="@{/user/noPublishedBlogs}"><i class="folder open icon"></i>草稿</a> 
+					<a class="active item"><i class="star icon"></i>收藏文章</a>
+				    <div class="header item">相册管理</div>
+				    <a class="item" th:href="@{/user/galleryList}"><i class="folder open icon"></i>个人相册</a>
+				</div>
+			</div>
+			<div class="twelve wide column">
+				<div class="ui attached segment">
+					<div class="ui vertical segment m-padded-tb-large"
+						th:each="blog :${blogs}">
+						<div
+							class="ui middle aligned vertical mobile reversed stackable grid">
+							<div class="eleven wide column">
+								<h3 class="ui header">
+									<a href="#" th:href="@{/blog/{id}(id=${blog.id})}"
+										target="_blank" th:text="${blog.title}"></a>
+								</h3>
+								<p class="m-text-opacity-middle"
+									th:text="|${blog.description}......|"></p>
+								<div class="ui grid">
+									<div class="eleven wide column">
+										<div class="ui horizontal link list">
+											<div class="item">
+												<img alt="" th:src="@{${blog.user.avatar}}"
+													class="ui mini circular image" />
+												<div class="content m-text-large"
+													th:text="${blog.user.nickname}">刘松</div>
+											</div>
+											<div class="item">
+												<i class="calendar alternate icon"></i><span
+													style="vertical-align:middle;"
+													th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm')}"></span>
+											</div>
+											<div class="item">
+												<i class="eye icon"></i><span
+													style="vertical-align:middle;margin-left:1px"
+													th:text="${blog.views}"></span>
+											</div>
+											<div class="item">
+												<i class="thumbs outline up icon"></i><span
+													style="vertical-align:middle;margin-left:1px"
+													th:text="${blog.thumbsUpCount}"></span>
+											</div>
+										</div>
+									</div>
+									<div class="right aligned five wide column">
+										<a href="#" target="_blank" class="ui teal label"
+											th:text="${blog.type.name}"></a>
+									</div>
+								</div>
+							</div>
+							<div class="five wide column">
+								<a href="#" th:href="@{/blog/{id}(id=${blog.id})}"
+									target="_blank"> <img
+									src="https://picsum.photos/seed/picsum/800/400"
+									class="ui rounded image" th:src="@{${blog.firstPicture}}" />
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+	</div>
+
+
+
+
+
+
+
+	<!-- 底部footer -->
+	<footer class="ui teal inverted attached segment m-padded-tb-massive"
+		style="border:none;">
+		<div class="ui center aligned container">
+			<div class="ui internally celled stackable grid">
+				<div class="row">
+					<div class="three wide column">
+						<div class="ui inverted link list">
+							<div class="item">
+								<img src="../static/images/wechat.png" class="ui rounded image"
+									style="width:100px" th:src="@{/images/wechat.png}" />
+							</div>
+						</div>
+					</div>
+					<div class="three wide column">
+						<h4 class="ui inverted header">最新博客</h4>
+						<div class="ui inverted link list">
+							<a href="#" class="item">用户故事（User Story）</a> <a href="#"
+								class="item">香港暴徒的出路在哪里？</a> <a href="#" class="item">华为最新折叠手机</a>
+						</div>
+					</div>
+					<div class="three wide column">
+						<h4 class="ui inverted header">联系我们</h4>
+						<div class="ui inverted link list">
+							<a href="#" class="item">Email:18810102841@163.com</a> <a
+								href="#" class="item">电话:010-8207107</a> <a href="#"
+								class="item">QQ:903442712</a>
+						</div>
+					</div>
+					<div class="seven wide column">
+						<h4 class="ui inverted header">LiuSong</h4>
+						<p class="m-text-opacity-mini">这是我的个人博客，会分享关于编程、写作、思考相关的任何内容，希望可以给
+							所有来到这里的人帮助...</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui inverted  divider"></div>
+			<p class="m-text-spaced m-text-opacity-mini">Copyright
+				©2019-2020LiuSong Designed By LiuSong</p>
+		</div>
+	</footer>
+	<script type="text/javascript" src="../static/js/jquery.min.js"
+		th:src="@{/js/jquery.min.js}"></script>
+	<script src="../static/js/semantic.min.js"
+		th:src="@{/js/semantic.min.js}"></script>
+	<script type="text/javascript">
+	
+		$('#showHideBtn').click(function() {
+			$('.m-item').toggleClass('m-mobile-hide');
+		});
+	
+		$('.github').popup({});
+		$('.wechat').popup({
+			popup : $('.payWeChat'),
+			position : 'bottom center'
+		});
+	
+		$('.qq').popup({});
+	
+		$('#goLogout2')
+			.dropdown({
+				on : 'hover'
+			});
+	</script>
+</body>
+</html>

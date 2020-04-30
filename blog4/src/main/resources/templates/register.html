@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,viewport-fit=cover" />
+<title>注册界面</title>
+<link href="../static/css/semantic.min.css" rel="stylesheet"
+	th:href="@{/css/semantic.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/me.css"
+	th:href="@{/css/me.css}" />
+</head>
+<body>
+	<!-- 顶部导航栏 -->
+	<nav
+		class="ui teal inverted attached segment m-padded-tb-mini m-shadow-small"
+		style="border:none;">
+		<div class="ui container">
+			<div class="ui teal inverted secondary stackable menu">
+				<h2 class="ui orange header item">猿圈</h2>
+				<div class="right m-item item m-mobile-hide">
+					<a href="#" th:href="@{/}" class="m-item item m-mobile-hide"> <i
+						class="home icon"></i> 首页
+					</a>
+					<div id="goLogout" class="ui dropdown item ">
+					<i class="user icon"></i>
+						<div class="text">会员中心</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<a href="#" th:href="@{/user/toLoginPage}" class="item"><i
+								class="sign in icon"></i>登 录</a> <a href="#" class="item"><i
+								class="add user icon"></i>注 册</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a id="showHideBtn" href="#"
+			class="ui teal button icon m-top-right m-mobile-show"> <i
+			class="sidebar icon"></i>
+		</a>
+	</nav>
+
+
+
+	<!-- 中间内容部分 -->
+	<div class="m-padded-tb-large m-width">
+
+		<div class="ui container">
+			<div class="ui middle aligned center aligned grid">
+				<div class="column m-padded-tb-large" style="width:35em">
+					<form class="ui large form" action="#" method="post"
+						th:action="@{/register/userRegister}"
+						enctype="multipart/form-data">
+						
+						<div class="ui teal inverted  secondary top attached segment" style="border:none">
+							<span style="font-size:16px;color:#ffffff;letter-spacing:2px">我们不生产bug，我们是bug的搬运工！</span>
+						</div>
+						
+						<div class="ui attached segment" style="border-bottom:none;">
+							<div class="ui middle aligned two column grid">
+								<a class="column" style="background:#DCDCDC"
+									th:href="@{/user/toLoginPage}"> <span
+									style="font-weight:600;color:#888888">登 录</span>
+								</a>
+								<div class="column">
+									<label style="font-weight:600;color:#888888">注 册</label>
+								</div>
+							</div>
+						</div>
+						<div class="ui attached segment">
+							<div class="field">
+								<div class="ui left icon input">
+									<i class="user icon"></i> <input type="text" name="username"
+										placeholder="用户名" id="username" />
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui left icon input">
+									<i class="user icon"></i> <input type="text" name="nickname"
+										placeholder="姓名" id="nickname" />
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui left icon input">
+									<i class="lock icon"></i> <input type="password"
+										name="password" placeholder="密码" />
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui left icon input">
+									<i class="mail icon"></i> <input type="text" name="email"
+										placeholder="邮箱" />
+								</div>
+							</div>
+							<div class="field">
+								<label for="imgInput" class="ui inverted green  button">上传头像</label>
+								<input type="file" accept="image/*" multiple="multiple"
+									id="imgInput" name="file" style="display: none;" />
+							</div>
+							<div class="field" id="divShow">
+								<img class="ui thiny avatar image" alt="" src="" id="imgShow"
+									height="50px" width="50px" />
+							</div>
+							<button class="ui fluid large teal button" type="submit">注
+								册</button>
+						</div>
+
+						<div class="ui error message"></div>
+						<div class="ui negative message"
+							th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+
+
+	<!-- 底部footer -->
+	<footer class="ui teal inverted attached segment m-padded-tb-massive"
+		style="border:none;">
+		<div class="ui center aligned container">
+			<div class="ui inverted  divider"></div>
+			<p class="m-text-spaced m-text-opacity-mini">Copyright
+				©2019-2020LiuSong Designed By LiuSong</p>
+		</div>
+	</footer>
+	<script type="text/javascript" src="../static/js/jquery.min.js"
+		th:src="@{/js/jquery.min.js}"></script>
+	<script src="../static/js/semantic.min.js"
+		th:src="@{/js/semantic.min.js}"></script>
+	<script type="text/javascript">
+	
+	$(document).ready(function() {
+		$('.ui.form')
+			.form({
+				fields : {
+					username : {
+						identifier : 'username',
+						rules : [
+							{
+								type : 'empty',
+								prompt : '用户名不能为空'
+							}
+						]
+					},
+					nickname : {
+						identifier : 'nickname',
+						rules : [
+							{
+								type : 'empty',
+								prompt : '姓名不能为空'
+							}
+						]
+					},
+					password : {
+						identifier : 'password',
+						rules : [
+							{
+								type : 'empty',
+								prompt : '密码不能为空'
+							}
+						]
+					},
+					email : {
+						identifier : 'email',
+						rules : [
+							{
+								type : 'email',
+								prompt : '邮箱格式有误'
+							}
+						]
+					}
+				}
+			});
+	});
+	
+		$('#showHideBtn').click(function() {
+			$('.m-item').toggleClass('m-mobile-hide');
+		});
+		$('.github').popup({});
+		$('.wechat').popup({
+			popup : $('.payWeChat'),
+			position : 'bottom center'
+		});
+		$('.qq').popup({
+			
+		});
+		
+		$('#goLogout')
+		.dropdown({
+			on : 'hover'
+		});
+		$("#imgInput").change(function(){
+		    $("#imgShow").attr("src",URL.createObjectURL($(this)[0].files[0]));
+		});
+	</script>
+</body>
+</html>

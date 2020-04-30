@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,viewport-fit=cover" />
+<title>博客后台</title>
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/semantic.min.css"
+	th:href="@{/css/semantic.min.css}" />
+<link rel="stylesheet" type="text/css" href="../../static/css/me.css"
+	th:href="@{/css/me.css}" />
+</head>
+<body>
+	<!-- 顶部导航栏 -->
+	<nav
+		class="ui teal inverted attached segment m-padded-tb-mini m-shadow-small"
+		style="border:none;">
+		<div class="ui container">
+			<div class="ui teal inverted secondary stackable menu">
+				<h2 class="ui orange header item">博客后台管理</h2>
+				<a href="#" th:href="@{/admin/blog}" class="m-item item m-mobile-hide">
+				      <i class="home icon"></i>博客</a>
+			    <a href="#" th:href="@{/admin/type}" class="m-item item m-mobile-hide">
+			          <i class="idea icon"></i>分类</a> 
+			    <a href="#" th:href="@{/admin/tag}" class="m-item item m-mobile-hide">
+			          <i class="tags icon"></i>标签</a>
+				<div class="right menu">
+					<div id="goLogout" class="ui dropdown item ">
+						<img alt="" src="../../static/images/1.jpg"
+							class="ui avatar image" th:src="${session.user.avatar}" />
+						<div class="text" th:text="${session.user.nickname}">刘松</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<a href="#" th:href="@{/admin/logout}" class="item">注销</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a id="showHideBtn" href="#"
+			class="ui teal button icon m-top-right m-mobile-show"> <i
+			class="sidebar icon"></i>
+		</a>
+	</nav>
+
+
+
+	<!-- 中间内容部分 -->
+	<div class="m-padded-tb-large m-width">
+		<div class="ui container">
+			<div class="ui success large message m-shadow-small">
+				<h2>Hi,</h2>
+				<p>刘松，欢迎您登陆博客后台系统！</p>
+			</div>
+			<img class="ui rounded bordered fluid image m-shadow-small"
+				src="../../static/images/1.jpg" th:src="${session.user.avatar}" />
+		</div>
+	</div>
+
+
+
+
+	<!-- 底部footer -->
+	<footer class="ui teal inverted attached segment m-padded-tb-massive"
+		style="border:none;">
+		<div class="ui center aligned container">
+			<div class="ui internally celled stackable grid">
+				<div class="row">
+					<div class="three wide column">
+						<div class="ui inverted link list">
+							<div class="item">
+								<img src="../../static/images/wechat.png"
+									class="ui rounded image" style="width:100px"
+									th:src="@{/images/wechat.png}" />
+							</div>
+						</div>
+					</div>
+					<div class="three wide column">
+						<h4 class="ui inverted header">最新博客</h4>
+						<div class="ui inverted link list">
+							<a href="#" class="item">用户故事（User Story）</a> <a href="#"
+								class="item">香港暴徒的出路在哪里？</a> <a href="#" class="item">华为最新折叠手机</a>
+						</div>
+					</div>
+					<div class="three wide column">
+						<h4 class="ui inverted header">联系我们</h4>
+						<div class="ui inverted link list">
+							<a href="#" class="item">Email:18810102841@163.com</a> <a
+								href="#" class="item">电话:010-8207107</a> <a href="#"
+								class="item">QQ:903442712</a>
+						</div>
+					</div>
+					<div class="seven wide column">
+						<h4 class="ui inverted header">LiuSong</h4>
+						<p class="m-text-opacity-mini">这是我的个人博客，会分享关于编程、写作、思考相关的任何内容，希望可以给
+							所有来到这里的人帮助...</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui inverted  divider"></div>
+			<p class="m-text-spaced m-text-opacity-mini">Copyright
+				©2019-2020LiuSong Designed By LiuSong</p>
+		</div>
+	</footer>
+	<script type="text/javascript" src="../../static/js/jquery.min.js"
+		th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" src="../../static/js/semantic.min.js"
+		th:src="@{/js/semantic.min.js}"></script>
+	<script type="text/javascript">
+	
+		$('#showHideBtn').click(function() {
+			$('.m-item').toggleClass('m-mobile-hide');
+		});
+	
+	
+		$('#goLogout')
+			.dropdown({
+				on : 'hover'
+			});
+	
+		$('#type')
+			.dropdown({
+				on : 'hover'
+			});
+	</script>
+</body>
+</html>

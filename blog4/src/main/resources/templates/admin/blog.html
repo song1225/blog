@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,viewport-fit=cover" />
+<title>博客管理</title>
+<link rel="stylesheet" type="text/css"
+	href="../static/css/semantic.min.css"
+	th:href="@{/css/semantic.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/me.css"
+	th:href="@{/css/me.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/me.css"
+	th:href="@{/css/main.css}" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/ionicons/2.0.1/css/ionicons.min.css" />
+
+</head>
+<body>
+
+	<div
+		class="ui sidebar vertical left menu overlay  visible sidemenu inverted  grey"
+		style="-webkit-transition-duration: 0.1s; transition-duration: 0.1s;"
+		data-color="grey">
+		<a class="item logo" href="#"></a>
+		<div class="ui accordion inverted">
+			<a class="item" th:href="@{/admin/toAdminPage}"> <i class="ion-speedometer titleIcon icon"></i>仪表盘</a> 
+			<a class="item" th:href="@{/admin/getUserList}"><i class="ion-ios-person titleIcon icon"></i> 用户管理</a> 
+			<a class="item" th:href="@{/admin/typeList}"><i class="ion-ios-analytics titleIcon  icon"></i>分类管理</a>
+			<a class="item" th:href="@{/admin/tagList}"><i class="ion-ios-pricetag titleIcon  icon"></i> 标签管理</a>
+			<a class="active item"><i class="ion-ios-paper titleIcon icon"></i>文章管理</a> 
+			<a class="item" th:href="@{/admin/commentList}"><i class="ion-ios-chatboxes titleIcon icon"></i>评论管理</a>
+			<a class="item" th:href="@{/admin/noticeList}"><i class="ion-ios-bell titleIcon icon"></i>公告管理</a>
+			<a class="item" th:href="@{/admin/logList}"><i class="ion-bug titleIcon icon"></i>日志管理</a>
+		</div>
+	</div>
+
+
+	<div class="pusher">
+		<!--navbar-->
+		<div class="navslide navwrap">
+			<div class="ui menu icon borderless grid" data-color="inverted white">
+				<a class="item labeled openbtn"> <i
+					class="ion-navicon-round big icon"></i>
+				</a> <a class="item labeled expandit"
+					onclick="toggleFullScreen(document.body)"> <i
+					class="ion-arrow-expand big icon"></i>
+				</a>
+				<div class="item ui colhidden">
+					<div class="ui icon input">
+						<input type="text" placeholder="Search..." /> <i
+							class="search icon"></i>
+					</div>
+				</div>
+				<div class="right menu colhidden">
+					<a class="item labeled" style="font-size:16px">欢迎,&nbsp;<span
+						th:text="${session.user.nickname}" style="color:red;"></span></a>
+					<div class="ui dropdown item">
+						<img class="ui mini circular image" src="../images/avatar.png"
+							alt="label-image" th:src="${session.user.avatar}" />&nbsp;
+						<div class="menu">
+							<a class="item" th:href="@{/user/toLoginPage}">注销</a>
+						</div>
+					</div>
+					<a class="item labeled rightsidebar computer only"> <i
+						class="ion-wrench large icon"></i>
+					</a>
+
+				</div>
+			</div>
+		</div>
+		<!--navbar-->
+		<!--maincontent-->
+		<div class="mainWrap navslide">
+			<div class="ui equal width left aligned padded grid stackable">
+				<div class="row">
+
+
+					<div class="sixteen wide column">
+						<div class="ui segments">
+							<div class="ui teal segment">
+								<div class="ui middle aligned two column grid">
+									<div class="column">
+										<h5 class="ui header">博客列表</h5>
+									</div>
+									<div class="right aligned column">
+										<div class="ui blue icon button" data-content="发布文章"
+											id="addType">
+											<i class="add icon"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ui segment">
+								<table id="data_table"
+									class="ui compact selectable striped celled table tablet stackable"
+									cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th></th>
+											<th>ID</th>
+											<th>文章名称</th>
+											<th>用户昵称</th>
+											<th>首图</th>
+											<th>推荐</th>
+											<th>状态</th>
+											<th>更新时间</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+
+									<tbody th:each="blog,iterStat:${page.content}">
+										<tr>
+											<td style="text-align:center">
+												<div class="ui checkbox">
+													<input type="checkbox" /> <label class="coloring red"></label>
+												</div>
+											</td>
+											<td th:text="${iterStat.index}+1"></td>
+											<td th:text="${blog.title}"></td>
+											<td th:text="${blog.user.nickname}"></td>
+											<td>
+											<img th:src="${blog.firstPicture}" style="width:80px;height:40px"/>
+											</td>
+											<td th:text="${blog.recommend}? '是':'否'"></td>
+											<td th:text="${blog.published}? '发布':'草稿'"></td>
+											<td
+												th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+											<td><i class="icon large blue ion-ios-compose"
+												title="编辑文章"></i> <i class="icon large red ion-ios-trash"
+												title="删除文章"></i>
+												<i class="icon large brown ion-ios-cloud-download-outline" title="下架文章"></i>
+												</td>
+										</tr>
+									</tbody>
+									<tfoot class="hiddenui">
+										<tr>
+											<th colspan="9">共【<span th:text="${page.totalElements}"></span>】条记录
+												<div class="ui right floated pagination menu">
+													<a class="item" th:text="首页"
+														th:href="@{/admin/blogList(pageNum=1)}"></a> <a
+														class="icon item"
+														th:href="@{/admin/blogList(pageNum=${page.number})}"
+														th:unless="${page.first}" th:text="上一页"></a>
+													<th:block
+														th:each="pageNum:${#numbers.sequence(1,page.totalPages)}">
+														<a class="active item" th:if="${pageNum}==${page.number}+1"
+															th:text="${pageNum}"
+															th:href="@{/admin/blogList(pageNum=${pageNum})}"></a>
+														<a class="item" th:if="${pageNum} ne ${page.number}+1"
+															th:text="${pageNum}"
+															th:href="@{/admin/blogList(pageNum=${pageNum})}"></a>
+													</th:block>
+													<a class="icon item"
+														th:href="@{/admin/blogList(pageNum=${page.number}+2)}"
+														th:unless="${page.last}" th:text="下一页"></a> <a
+														class="item" th:text="末页"
+														th:href="@{/admin/blogList(pageNum=${page.totalPages})}"></a>
+												</div>
+											</th>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- **********************添加分类模态框***************************** -->
+	<div class="ui small modal">
+		<div class="header">发布文章</div>
+		<div class="content">
+			<div class="ui fluid labeled input">
+				<label class="ui label">分类名称:</label><input type="text"
+					style="width:400px" id="typeName" required="required"
+					placeholder="请输入分类名称" />
+			</div>
+		</div>
+		<div class="actions">
+			<div class="ui teal approve button">确定</div>
+			<div class="ui cancel button">取消</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="../static/js/jquery.min.js"
+		th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" src="../static/js/semantic.min.js"
+		th:src="@{/js/semantic.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/plug/nicescrool/jquery.nicescroll.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/main.js}"></script>
+	<script type="text/javascript">
+	
+		/* ********************给图标按钮添加提示文字信息****************** */
+		$(".ui.icon.button").popup();
+		$(".ion-ios-compose").popup();
+		$(".ion-ios-trash").popup();
+		$(".ion-ios-cloud-download-outline").popup();
+		/* ********************************添加用户模态框js，打开模态框***************************** */
+		$("#addType").click(function() {
+			$('.small.modal').modal({
+				onDeny : function() {
+					$('#typeName').val("");
+				},
+				onApprove : function() {
+					var typeName = $("#typeName").val();
+					if (typeName != "") {
+						$.ajax({
+							url : "/admin/addType",
+							type : 'POST',
+							data : {
+								"typeName" : typeName
+							},
+							success : function(res) {
+								if (res.code == 100) {
+									window.location.href = "/admin/typeList";
+								}
+							}
+						});
+					}
+				}
+			}).modal('show');
+		});
+	</script>
+</body>
+</html>

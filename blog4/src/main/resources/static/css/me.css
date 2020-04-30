@@ -1,0 +1,141 @@
+/* 1em=14px,必须添加important */
+body {
+	background: url('../images/bg1.png') !important;
+}
+
+.m-padded-tb-mini {
+	padding-top: 0.2em !important;
+	padding-bottom: 0.2em !important;
+}
+
+.m-padded-tb-large {
+	padding-top: 3em !important;
+	padding-bottom: 3em !important;
+}
+
+.m-padded-tb-massive {
+	padding-top: 2em !important;
+	padding-bottom: 2em !important;
+}
+
+.m-margin-tb-mini {
+	margin-top: 0.3em !important;
+	margin-bottom: 0.3em !important;
+}
+
+.m-margin-top {
+	margin-top: 2em !important;
+}
+
+/* *********************绝对定位***************************88 */
+.m-top-right {
+	position: absolute;
+	top: 1em !important;
+	right: 0;
+}
+
+.m-fixed {
+	position: fixed !important;
+	z-index: 10 !important;
+}
+
+.m-right-bottom {
+	bottom: 0 !important;
+	right: 0 !important;
+}
+
+.m-padded-mini {
+	padding: 1em !important;
+}
+
+.m-padded-lr {
+	padding-left: 4em !important;
+	padding-right: 4em !important;
+}
+
+.m-width {
+	max-width: 60em !important;
+	margin: auto !important;
+}
+/* ****************字体样式*************************** */
+/* 字体粗细 */
+.m-text-thin {
+	font-weight: 300 !important;
+}
+
+.m-text-large {
+	font-weight: 600 !important;
+}
+/* 字间距 */
+.m-text-spaced {
+	letter-spacing: 1px !important;
+}
+/* 行高 */
+.m-text-lined {
+	line-height: 1.8 !important;
+}
+
+/* 透明度 */
+.m-text-opacity-mini {
+	opacity: 0.6 !important;
+}
+
+.m-text-opacity-middle {
+	opacity: 0.7 !important;
+}
+
+.m-inline-block {
+	display: inline !important;
+}
+/* ************************************************* */
+/* 文字颜色 */
+.m-text-color {
+	color: #333 !important;
+}
+/* **************************************手机端操作，隐藏nav中条目，显示有上角按钮***************************** */
+.m-mobile-show {
+	display: none !important;
+}
+
+@media screen and (max-width: 768px) { /*当屏幕尺寸小于768px时，应用下面的CSS样式*/
+	.m-mobile-hide {
+		display: none !important;
+	}
+	.m-mobile-show {
+		display: block !important;
+	}
+	.m-padded-lr {
+		padding-left: 1em !important;
+		padding-right: 1em !important;
+	}
+}
+/* 导航栏阴影效果 */
+.m-shadow-small {
+	-webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+a{
+	text-decoration:none !important;
+}
+a:hover{
+	text-decoration:none !important;
+}
+
+.m-button-success{
+	width:36px !important;
+	height:20px !important;
+	border:0 !important;
+	border-radius:3px !important;
+	background: #3d83fa !important;
+	color: #fefefe !important;
+}
+
+.m-button-false{
+	width:36px !important;
+	height:20px !important;
+	border:0 !important;
+	border-radius:3px !important;
+	background: #FF0033 !important;
+	color: #fefefe !important;
+}

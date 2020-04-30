@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,viewport-fit=cover" />
+<title>猿圈后台首页</title>
+<link rel="stylesheet" type="text/css"
+	href="../static/css/semantic.min.css"
+	th:href="@{/css/semantic.min.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/me.css"
+	th:href="@{/css/me.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/me.css"
+	th:href="@{/css/main.css}" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/ionicons/2.0.1/css/ionicons.min.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/me.css"
+	th:href="@{/css/chartist.min.css}" />
+</head>
+<body>
+
+	<div
+		class="ui sidebar vertical left menu overlay  visible sidemenu inverted  grey"
+		style="-webkit-transition-duration: 0.1s; transition-duration: 0.1s;"
+		data-color="grey">
+		<a class="item logo" href="#">
+		 <img src="img/thumblogo.png" alt="stagblogo" class="displaynone" />
+		</a>
+		<div class="ui accordion inverted">
+			<a class="active item"> <i class="ion-speedometer titleIcon icon"></i>仪表盘
+			</a> <a class="item" th:href="@{/admin/getUserList}"><i
+				class="ion-ios-person titleIcon  icon"></i> 用户管理</a>
+				 <a class="item" th:href="@{/admin/typeList}"><i class="ion-ios-analytics titleIcon  icon"></i>分类管理</a> 
+				 <a class="item" th:href="@{/admin/tagList}"><i class="ion-ios-pricetag titleIcon  icon"></i> 标签管理</a>
+				 <a class="item" th:href="@{/admin/blogList}"><i class="ion-ios-paper titleIcon icon"></i>文章管理</a> 
+				 <a class="item" th:href="@{/admin/commentList}"><i class="ion-ios-chatboxes titleIcon icon"></i>评论管理</a> 
+				 <a class="item"
+				th:href="@{/admin/noticeList}"><i
+				class="ion-ios-bell titleIcon icon"></i>公告管理</a> <a class="item"
+				th:href="@{/admin/logList}"><i class="ion-bug titleIcon icon"></i>日志管理</a>
+		</div>
+	</div>
+
+
+	<div class="pusher">
+		<!--navbar-->
+		<div class="navslide navwrap">
+			<div class="ui menu icon borderless grid" data-color="inverted white">
+				<a class="item labeled openbtn"> <i
+					class="ion-navicon-round big icon"></i>
+				</a> <a class="item labeled expandit"
+					onclick="toggleFullScreen(document.body)"> <i
+					class="ion-arrow-expand big icon"></i>
+				</a>
+				<div class="item ui colhidden">
+					<div class="ui icon input">
+						<input type="text" placeholder="Search..." /> <i
+							class="search icon"></i>
+					</div>
+				</div>
+				<div class="right menu colhidden">
+					<a class="item labeled" style="font-size:16px">欢迎,&nbsp;<span
+						th:text="${session.user.nickname}" style="color:red;"></span></a>
+					<div class="ui dropdown item">
+						<img class="ui mini circular image" src="../images/avatar.png"
+							alt="label-image" th:src="${session.user.avatar}" />&nbsp;
+						<div class="menu">
+							 <a class="item" th:href="@{/user/toLoginPage}">注销</a>
+						</div>
+					</div>
+					<a class="item labeled rightsidebar computer only"> <i
+						class="ion-wrench large icon"></i>
+					</a>
+
+				</div>
+			</div>
+		</div>
+		<!--navbar-->
+		<!--maincontent-->
+		<div class="mainWrap navslide">
+			<div class="ui equal width left aligned padded grid stackable">
+				<div class="row">
+
+					<div class="sixteen wide tablet four wide computer column">
+
+						<div class="ui teal segment left aligned">
+							<div class="ui statistic">
+								<div class="value counter" th:text="${sumViews}">3,952</div>
+								<div class="label">浏览量</div>
+								<i class="icon  ion-arrow-graph-up-right teal statisticIcon"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="sixteen wide tablet four wide computer column">
+						<div class="ui blue segment left aligned">
+							<div class="ui  statistic">
+								<div class="value counter" th:text="${userCount}"></div>
+								<div class="label">注册用户</div>
+								<i class="icon ion-ios-person blue statisticIcon"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="sixteen wide tablet four wide computer column">
+						<div class="ui purple segment left aligned">
+							<div class="ui  statistic">
+								<div class="value counter" th:text="${blogCount}">3,112</div>
+								<div class="label">文章</div>
+								<i class="icon ion-ios-paper purple statisticIcon"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="sixteen wide tablet four wide computer column">
+						<div class="ui red segment left aligned">
+							<div class="ui statistic">
+								<div class="value counter">9,582</div>
+								<div class="label">其他数据</div>
+								<i class="icon ion-trophy red statisticIcon"></i>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="sixteen  eight wide tablet eight wide computer column">
+					<div class="ui segments">
+						<div class="ui blue segment">
+							<h5 class="ui header">
+								<i class="chart bar icon"></i>数据详情
+							</h5>
+						</div>
+						<div class="ui segment">
+							<div class="ct-golden-section" id="div1"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="sixteen  eight wide tablet eight wide computer column">
+					<div class="ui segments">
+						<div class="ui blue segment">
+							<h5 class="ui header">
+								<i class="chart pie icon"></i>数据详情
+							</h5>
+						</div>
+						<div class="ui segment">
+							<div class="ct-golden-section" id="div2"></div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/semantic.min.js}"></script>
+	<script type="text/javascript" th:src="@{/plug/nicescrool/jquery.nicescroll.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/main.js}"></script>
+	<script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/counter/waypoints.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/counter/jquery.counterup.min.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+	/* <![CDATA[ */
+			var myChart = echarts.init(document.getElementById('div1'));
+			var myChart1 = echarts.init(document.getElementById('div2'));
+			var names = [];
+			var values = [];
+			$.ajax({
+			    type : "POST",
+			    async:true,
+				url : /*[[@{/admin/getCharts}]]*/,
+				dataType : "json",
+				success : function(result) {
+				 if (result != null && result.length > 0) {
+				  for(var i=0;i<result.length;i++){
+				    names.push(result[i].name);
+					values.push(result[i].value);
+				  }
+						myChart.setOption({
+							tooltip : {
+								trigger : 'axis',
+								axisPointer : {
+									type : 'line'
+								}
+							},
+							   grid: {
+								        left: '3%',
+								        right: '4%',
+								        bottom: '3%',
+								        containLabel: true
+								    },
+							xAxis : [
+								{
+									type : 'category',
+									data : names,
+									axisTick : {
+										alignWithLabel : true
+									}
+								}
+							],
+							 yAxis: [
+							        {
+							            type: 'value'
+							        }
+							    ],
+							series : [
+								{
+									name : '数据柱图',
+									type : 'bar',
+									barWidth : '50%',
+									data : values,
+									itemStyle:{
+									   normal:{
+									     color:function(params){
+									        var colorList=['#63b2ee', '#76da91', '#f8cb7f','#f89588','#7cd6cf'];
+									        return colorList[params.dataIndex];
+									        }
+									     }
+									}
+								}
+							]
+						});
+						myChart1.setOption({
+						   color:['#63b2ee', '#76da91', '#f8cb7f','#f89588','#7cd6cf'],
+							tooltip : {
+								trigger : 'item',
+								formatter: '{a} <br/>{b} : {c} ({d}%)'
+							},
+							   legend: {
+							        bottom: 10,
+							        left: 'center',
+							        data: names
+							    },
+							series : [
+								{
+								    name: '数据饼图',
+									type : 'pie',
+									radius: '65%',
+						            center: ['50%', '50%'],
+						            selectedMode: 'single',
+									data : result
+								}
+							]
+						});
+						}else{
+						alert("图表请求数据为空，可能服务器暂未录入，您可以稍后再试！");
+						}
+				},
+				error:function(errorMsg){
+				 alert("图表请求数据失败，可能是服务器开小差了");
+				}
+			
+			});
+			 /* ]]> */
+	</script>
+</body>
+</html>

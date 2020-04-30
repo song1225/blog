@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,viewport-fit=cover"/>
+<title>搜索结果</title>
+<link rel="stylesheet" type="text/css"
+	href="../static/css/semantic.min.css" th:href="@{/css/semantic.min.css}"/>
+<link rel="stylesheet" type="text/css" href="../static/css/me.css" th:href="@{/css/me.css}"/>
+</head>
+<body>
+	<!-- 顶部导航栏 -->
+	<nav
+		class="ui teal inverted attached segment m-padded-tb-mini m-shadow-small"
+		style="border:none;">
+		<div class="ui container">
+			<div class="ui teal inverted secondary stackable menu">
+				<h2 class="ui orange header item">BLOG</h2>
+				<a href="index.html" class="active m-item item m-mobile-hide"><i
+					class="home icon"></i>首页</a> <a href="type.html"
+					class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a> <a
+					href="#" class="m-item item m-mobile-hide"><i
+					class="tags icon"></i>标签</a> <a href="archive.html"
+					class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+				<a href="about.html" class="m-item item m-mobile-hide"><i
+					class="info icon"></i>关于我</a>
+				<div class="right m-item item m-mobile-hide">
+					<div class="ui icon input">
+						<input type="text" placeholder="搜索" th:value="${search}"/> <i
+							class="search link icon"></i>
+					</div>
+					<div id="goLogout1" class="ui dropdown item ">
+						<i class="user icon"></i>
+						<div class="text">会员中心</div>
+						<i class="dropdown icon"></i>
+						<div class="menu">
+							<a href="#" th:href="@{/user/toLoginPage}" class="item"><i
+								class="sign in icon"></i>登 录</a> <a href="#"
+								th:href="@{/user/toRegisterPage}" class="item"><i
+								class="add user icon"></i>注 册</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a id="showHideBtn" href="#"
+			class="ui teal button icon m-top-right m-mobile-show"> <i
+			class="sidebar icon"></i>
+		</a>
+	</nav>
+
+
+
+	<!-- 中间内容部分 -->
+	<div class="m-padded-tb-large m-width">
+		<div class="ui container">
+			<div class="ui top attached segment">
+				<div class="ui middle aligned two column grid">
+					<div class="column">
+						<h3 class="ui teal header">搜索结果</h3>
+					</div>
+					<div class="right aligned column">
+						共
+						<h2 class="ui orange header m-inline-block" th:text="${page.totalElements}">15</h2>
+						个
+					</div>
+				</div>
+			</div>
+			<div class="ui teal segment">
+				<div class="ui vertical segment m-padded-tb-large" th:each="blog : ${page.content}">
+					<div
+						class="ui middle aligned vertical mobile reversed stackable grid">
+						<div class="eleven wide column">
+							<h3 class="ui header" th:text="${blog.title}">你真的理解什么是财富自由吗？</h3>
+							<p class="m-text-opacity-middle" th:text="${blog.description}">简单说来，财富自由就是有足够多的时间和足够多的钱做你想做的事情。在“基本”的生活需求得到“持续”保障的前提下，有足够的资本可以“自由”的投入到“该”做的事情中！做的事情中,有足够的资本可以“自由”的投入到“该”做的事情中！做的事情中</p>
+							<div class="ui stackable grid">
+								<div class="eleven wide column">
+									<div class="ui horizontal link list">
+										<div class="item">
+											<img alt="" src="https://picsum.photos/30/30"
+												class="ui mini circular image"/>
+											<div class="content m-text-large" th:text="${blog.user.nickname}">刘松</div>
+										</div>
+										<div class="item">
+											<i class="calendar alternate icon"></i> 
+											<span style="vertical-align:middle;" th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}">2019-11-19 19:16</span>
+										</div>
+										<div class="item">
+											<i class="eye icon"></i>
+											<span style="vertical-align:middle;" th:text="${blog.views}">2323</span>
+										</div>
+									</div>
+								</div>
+								<div class="right aligned five wide column">
+									<a href="#" target="_blank" class="ui teal label" th:text="${blog.type.name}">认知升级</a>
+								</div>
+							</div>
+						</div>
+						<div class="five wide column">
+							<a href="#" target="_blank"> <img
+								src="https://picsum.photos/seed/picsum/800/400"
+								class="ui rounded image" th:src="@{${blog.firstPicture}}"/>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- <div class="ui vertical segment m-padded-tb-large">
+					<div
+						class="ui middle aligned vertical mobile reversed stackable grid">
+						<div class="eleven wide column">
+							<h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+							<p class="m-text-opacity-middle">简单说来，财富自由就是有足够多的时间和足够多的钱做你想做的事情。在“基本”的生活需求得到“持续”保障的前提下，有足够的资本可以“自由”的投入到“该”做的事情中！做的事情中,有足够的资本可以“自由”的投入到“该”做的事情中！做的事情中</p>
+							<div class="ui stackable grid">
+								<div class="eleven wide column">
+									<div class="ui horizontal link list">
+										<div class="item">
+											<img alt="" src="https://picsum.photos/30/30"
+												class="ui mini circular image"/>
+											<div class="content m-text-large">刘松</div>
+										</div>
+										<div class="item">
+											<i class="calendar alternate icon"></i> 2019-11-19 19:16
+										</div>
+										<div class="item">
+											<i class="eye icon"></i>2323
+										</div>
+									</div>
+								</div>
+								<div class="right aligned five wide column">
+									<a href="#" target="_blank" class="ui teal label">认知升级</a>
+								</div>
+							</div>
+						</div>
+						<div class="five wide column">
+							<a href="#" target="_blank"> <img
+								src="https://picsum.photos/seed/picsum/800/400"
+								class="ui rounded image"/>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="ui vertical segment m-padded-tb-large">
+					<div
+						class="ui middle aligned vertical mobile reversed stackable grid">
+						<div class="eleven wide column">
+							<h3 class="ui header">你真的理解什么是财富自由吗？</h3>
+							<p class="m-text-opacity-middle">简单说来，财富自由就是有足够多的时间和足够多的钱做你想做的事情。在“基本”的生活需求得到“持续”保障的前提下，有足够的资本可以“自由”的投入到“该”做的事情中！做的事情中,有足够的资本可以“自由”的投入到“该”做的事情中！做的事情中</p>
+							<div class="ui stackable grid">
+								<div class="eleven wide column">
+									<div class="ui horizontal link list">
+										<div class="item">
+											<img alt="" src="https://picsum.photos/30/30"
+												class="ui mini circular image"/>
+											<div class="content m-text-large">刘松</div>
+										</div>
+										<div class="item">
+											<i class="calendar alternate icon"></i> 2019-11-19 19:16
+										</div>
+										<div class="item">
+											<i class="eye icon"></i>2323
+										</div>
+									</div>
+								</div>
+								<div class="right aligned five wide column">
+									<a href="#" target="_blank" class="ui teal label">认知升级</a>
+								</div>
+							</div>
+						</div>
+						<div class="five wide column">
+							<a href="#" target="_blank"> <img
+								src="https://picsum.photos/seed/picsum/800/400"
+								class="ui rounded image"/>
+							</a>
+						</div>
+					</div>
+				</div> -->
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+	<!-- 底部footer -->
+	<footer class="ui teal inverted attached segment m-padded-tb-massive"
+		style="border:none;">
+		<div class="ui center aligned container">
+			<div class="ui internally celled stackable grid">
+				<div class="row">
+					<div class="three wide column">
+						<div class="ui inverted link list">
+							<div class="item">
+								<img src="../static/images/wechat.png" th:src="@{/images/wechat.png}" class="ui rounded image"
+									style="width:100px"/>
+							</div>
+						</div>
+					</div>
+					<div class="three wide column">
+						<h4 class="ui inverted header">最新博客</h4>
+						<div class="ui inverted link list">
+							<a href="#" class="item">用户故事（User Story）</a> <a href="#"
+								class="item">香港暴徒的出路在哪里？</a> <a href="#" class="item">华为最新折叠手机</a>
+						</div>
+					</div>
+					<div class="three wide column">
+						<h4 class="ui inverted header">联系我们</h4>
+						<div class="ui inverted link list">
+							<a href="#" class="item">Email:18810102841@163.com</a> <a
+								href="#" class="item">电话:010-8207107</a> <a href="#"
+								class="item">QQ:903442712</a>
+						</div>
+					</div>
+					<div class="seven wide column">
+						<h4 class="ui inverted header">LiuSong</h4>
+						<p class="m-text-opacity-mini">这是我的个人博客，会分享关于编程、写作、思考相关的任何内容，希望可以给
+							所有来到这里的人帮助...</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui inverted  divider"></div>
+			<p class="m-text-spaced m-text-opacity-mini">Copyright
+				©2019-2020LiuSong Designed By LiuSong</p>
+		</div>
+	</footer>
+	<script type="text/javascript" src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
+	<script type="text/javascript">
+	
+		$('#showHideBtn').click(function() {
+			$('.m-item').toggleClass('m-mobile-hide');
+		});
+	
+		$('#payButton').popup({
+			popup : $('.payQR.popup'),
+			on : 'click',
+			position : 'bottom center'
+		});
+		
+		$('#goLogout1')
+		.dropdown({
+			on : 'hover'
+		});
+	</script>
+</body>
+</html>

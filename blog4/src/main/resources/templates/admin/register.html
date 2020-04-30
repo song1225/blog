@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,viewport-fit=cover" />
+<title>博客注册</title>
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/semantic.min.css"
+	th:href="@{/css/semantic.min.css}" />
+<link rel="stylesheet" type="text/css" href="../../static/css/me.css"
+	th:href="@{/css/me.css}" />
+</head>
+<body>
+	<div class="m-padded-tb-large">
+		<div class="ui container">
+			<div class="ui middle aligned center aligned grid">
+				<div class="column m-padded-tb-large" style="width:35em">
+					<h2 class="ui teal header">
+						<div class="content">管理后台注册</div>
+					</h2>
+					<form class="ui large form" action="#" method="post" th:action="@{/register/userRegister}" enctype="multipart/form-data">
+						<div class="ui stacked  segment">
+							<div class="field">
+								<div class="ui left icon input">
+									<i class="user icon"></i> <input type="text" name="username"
+										placeholder="用户名" id="username" />
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui left icon input">
+									<i class="user icon"></i> <input type="text" name="nickname"
+										placeholder="姓名" id="nickname" />
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui left icon input">
+									<i class="lock icon"></i> <input type="password"
+										name="password" placeholder="密码" />
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui left icon input">
+									<i class="lock icon"></i> <input type="text"
+										name="email" placeholder="邮箱" />
+								</div>
+							</div>
+							<div class="field">
+							    <label for="imgInput" class="ui inverted green button">上传头像</label>
+								<input type="file" accept="image/*" multiple="multiple" id="imgInput" name="file" style="display: none;"/>
+							</div>
+							<div class="field">
+								<img class="ui thiny avatar image" alt="" src="" id="imgShow" height="50px" width="50px"/>
+							</div>
+							<button class="ui fluid large teal button" type="submit">注  册</button>
+						</div>
+
+						<div class="ui error message"></div>
+						<div class="ui negative message"
+							th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
+
+					</form>
+
+					<div class="ui message">
+						已有账号？ <a href="#" th:href="@{/admin/toLoginPage}">登录</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../static/js/jquery.min.js"
+		th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" src="../../static/js/semantic.min.js"
+		th:src="@{/js/semantic.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.ui.form')
+				.form({
+					fields : {
+						username : {
+							identifier : 'username',
+							rules : [
+								{
+									type : 'empty',
+									prompt : '用户名不能为空'
+								}
+							]
+						},
+						password : {
+							identifier : 'password',
+							rules : [
+								{
+									type : 'empty',
+									prompt : '密码不能为空'
+								}
+							]
+						},
+						nickname : {
+							identifier : 'nickname',
+							rules : [
+								{
+									type : 'empty',
+									prompt : '姓名不能为空'
+								}
+							]
+						},
+						email : {
+							identifier : 'email',
+							rules : [
+								{
+									type : 'email',
+									prompt : '邮箱格式有误'
+								}
+							]
+						}
+					}
+				});
+		});
+		
+		$("#imgInput").change(function(){
+		    $("#imgShow").attr("src",URL.createObjectURL($(this)[0].files[0]));
+		});
+	</script>
+</body>
+</html>

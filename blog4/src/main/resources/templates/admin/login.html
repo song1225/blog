@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,viewport-fit=cover" />
+<title>博客登陆</title>
+<link rel="stylesheet" type="text/css"
+	href="../../static/css/semantic.min.css"
+	th:href="@{/css/semantic.min.css}" />
+<link rel="stylesheet" type="text/css" href="../../static/css/me.css"
+	th:href="@{/css/me.css}" />
+</head>
+<body>
+	<div class="m-padded-tb-large">
+		<div class="ui container">
+			<div class="ui middle aligned center aligned grid">
+				<div class="column m-padded-tb-large" style="width:35em">
+					<h2 class="ui teal header">
+						<div class="content">管理后台登陆</div>
+					</h2>
+					<form id="login" class="ui large form" action="#">
+						<div class="ui stacked  segment">
+							<div class="field">
+								<div class="ui left icon input">
+									<i class="user icon"></i> <input type="text" name="username"
+										placeholder="用户名" id="username" />
+								</div>
+							</div>
+							<div class="field">
+								<div class="ui left icon input">
+									<i class="lock icon"></i> <input type="password"
+										name="password" placeholder="密码" />
+								</div>
+							</div>
+							<button class="ui fluid large teal button" type="button"
+								id="login">登 录</button>
+						</div>
+
+						<div class="ui error message"></div>
+						<div class="ui negative message"
+							th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
+
+					</form>
+
+					<div class="ui message">
+						新用户吗? <a href="#" th:href="@{/register/toRegisterPage}">注册</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../static/js/jquery.min.js"
+		th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" src="../../static/js/semantic.min.js"
+		th:src="@{/js/semantic.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.ui.form')
+				.form({
+					fields : {
+						username : {
+							identifier : 'username',
+							rules : [
+								{
+									type : 'empty',
+									prompt : '用户名不能为空'
+								}
+							]
+						},
+						password : {
+							identifier : 'password',
+							rules : [
+								{
+									type : 'empty',
+									prompt : '密码不能为空'
+								}
+							]
+						}
+					}
+				});
+		});
+		$('#login').click(function() {
+			var username = $('input[name="username"]').val();
+			var password = $('input[name="password"]').val();
+			if (username != null || password != null) {
+				$.ajax({
+					url : '/admin/login',
+					type : 'POST',
+					data : {
+						username : username,
+						password : password
+					},
+					success : function(result) {
+						if(result.code==100){
+							location.href="/admin/toWebIndex";
+						}
+					}
+				});
+	
+			}
+	
+		});
+	</script>
+</body>
+</html>
